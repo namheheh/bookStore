@@ -1,11 +1,9 @@
-import React from 'react';
 import SettingAddress from './SettingAddress';
 import SettingAbout from './SettingAbout';
 import SettingInformation from './SettingInformation';
 import { useFetchOneUserQuery } from '../../../services/user.service';
 import { Link } from 'react-router-dom';
 
-// console.log(profileUser)
 
 const Profile = () => {
     const profileUser = JSON.parse(localStorage.getItem("user")!)
@@ -17,7 +15,7 @@ const Profile = () => {
             <div>
                 <div className="main-content" style={{ paddingTop: "" }}>
                     {/* Header */}
-                    <div className="header pb-8 pt-lg-8 d-flex align-items-center" style={{ minHeight: '200px', backgroundImage: 'url(https://lambanner.com/wp-content/uploads/2022/10/MNT-DESIGN-BANNER-GIAY-11.jpg)', backgroundSize: 'cover', backgroundPosition: 'center top' }}>
+                    <div className="header pb-8 pt-lg-8 d-flex align-items-center" style={{ minHeight: '200px', backgroundImage: 'url(https://bizweb.dktcdn.net/100/364/248/themes/736344/assets/bg_breadcrumb.jpg?1685433925349)', backgroundSize: 'cover', backgroundPosition: 'center top' }}>
                         {/* Mask */}
                         <span className="mask bg-gradient-default opacity-8" />
                         {/* Header container */}
@@ -48,7 +46,6 @@ const Profile = () => {
                                     <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                         <div className="d-flex justify-content-between">
                                             <a href="#" className="btn btn-sm btn-info mr-4">Cập nhật</a>
-                                            {/* <a href="#" className="btn btn-sm btn-default float-right">Message</a> */}
                                         </div>
                                     </div>
                                     <div className="card-body pt-0 pt-md-4">
@@ -57,7 +54,6 @@ const Profile = () => {
                                                 {usersOne?.userName}
                                             </h3>
                                             <hr className="my-4" />
-                                            <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
                                             <Link to="/orderhistory" className="btn btn-sm btn-primary">Đơn hàng đã mua</Link>
                                         </div>
                                     </div>

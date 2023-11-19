@@ -7,21 +7,11 @@ import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery, useGetProductsQuery } from "../../../services/product.service";
 import { useGetAuthorsQuery } from "../../../services/author.service";
 import { useCreateCartMutation } from "../../../services/cart.service";
-import { IProducts } from "../../../types/product.service";
 import CommentProductDetail from "./CommentProductDetail";
 import ProductSale from "../home/homeProduct/ProductSale";
 
 const ProductDetail = () => {
   const { data: productData } = useGetProductsQuery();
-  const [dataSourceToRender, setDataSourceToRender] = useState<IProducts[]>([]);
-  useEffect(() => {
-    if (productData) {
-      const updatedDataSource = productData.map((product) => ({
-        ...product,
-      }));
-      setDataSourceToRender(updatedDataSource);
-    }
-  }, [productData]);
   const { data: authorData } = useGetAuthorsQuery();
   const { _id } = useParams();
   const { data: prodetailData } = useGetProductByIdQuery(_id);
@@ -30,8 +20,6 @@ const ProductDetail = () => {
     (author) => author._id === prodetailData?.author_id
   );
   const { data: productDataDetail } = useGetProductsQuery();
-
-
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(prodetailData?.images[0]);
 
@@ -77,9 +65,7 @@ const ProductDetail = () => {
       if (!isAddingToCart) {
         setIsAddingToCart(true);
         const filteredProducts = productDataDetail?.map(async (product) => {
-          if (
-            product?._id == _id
-          ) {
+          if (product?._id == _id) {
             const cartItem = {
               product_id: product._id,
               user_id: user,

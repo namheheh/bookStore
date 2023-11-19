@@ -45,12 +45,6 @@ const CheckOut = () => {
 
 
     }, [cartUser, ProductDetailUser]);
-
-
-
-
-
-
     const [isAddingToCheckout, setIsAddingToCheckout] = useState(false);
     const [addCheckout] = useCreateCheckoutMutation();
     const totalSum = cartDetail.reduce((accumulator, item: any) => accumulator + item.total, 0);

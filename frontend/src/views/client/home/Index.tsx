@@ -4,15 +4,11 @@ import { useGetAuthorsQuery } from '../../../services/author.service';
 import { useGetProductsQuery } from '../../../services/product.service';
 import { IProducts } from '../../../types/product.service';
 import { useEffect, useState } from 'react';
-import { IProductDetail } from "../../../types/product";
-import ProductSale from "./homeProduct/ProductSale";
+import Slider from "react-slick";
 const Index = () => {
     const { data: productData } = useGetProductsQuery();
     const { data: authorData } = useGetAuthorsQuery();
-    // const { data: productDTData } = useGetProductsQuery();
     const [searchResult, setSearchResult] = useState<IProducts[]>([]);
-    const [dataDTToRender, setDataDTToRender] = useState<IProductDetail[]>([]);
-    const [dataDTResult, setdataDThResult] = useState<IProductDetail[]>([]);
     const [dataSourceToRender, setDataSourceToRender] = useState<IProducts[]>([]);
     const authorName = (item: any) => authorData?.find((author: any) => author._id == item.author_id)?.name
     const discount = (item: any) => Math.round(100 - (item.price_sale / item.price * 100))
@@ -24,43 +20,48 @@ const Index = () => {
             setSearchResult(updatedDataSource)
         }
     }, [productData]);
-    // useEffect(() => {
-    //     if (productDTData) {
-    //         const updatedDataDT = productDTData.map(({ ...IProductDetail }) => ({
-    //             ...IProductDetail,
-    //         }));
-    //         setDataDTToRender(updatedDataDT);
-    //         setdataDThResult(updatedDataDT)
-    //     }
-    // }, [productDTData]);
 
-    // let DTData = (itemm: any) => productDTData?.filter((item) => item._id === itemm._id);
-    let filteredDataDT = dataDTToRender;
-    let filteredData = dataSourceToRender;
-    let setColor = [dataDTToRender?.map((item: any) => item.color)]
-    let color = [...new Set(setColor[0])];
-    let setSize = [dataDTToRender?.map((item: any) => item.size)]
-    let Size = [...new Set(setSize[0])];
+    let setPublisher = [productData?.map((item: IProducts) => item.publisher)]
+    let Publisher = [...new Set(setPublisher[0])];
     const onHandleClick = ({ target: { value } }: any) => {
-        // || DTData(itemm)?.find((itemd) => itemd.size == value)
-        filteredData = filteredData.filter((itemm) => itemm.author_id == value)
+        let filteredData = dataSourceToRender;
+        filteredData = filteredData.filter((itemm) => itemm.author_id == value || itemm.publisher == value)
         if (filteredData.length > 1) {
             setDataSourceToRender(filteredData);
         } else {
             filteredData = searchResult;
-            filteredData = filteredData.filter((itemm) => itemm.author_id == value )
+            filteredData = filteredData.filter((itemm) => itemm.author_id == value || itemm.publisher == value)
             setDataSourceToRender(filteredData);
         }
-
-        filteredDataDT = filteredDataDT.filter((itemm) => filteredData?.find((item) => item._id == itemm.product_id)?._id)
-        if (filteredDataDT.length > 0) {
-            setDataDTToRender(filteredDataDT)
-        } else {
-            filteredDataDT = dataDTResult;
-            filteredDataDT = filteredDataDT.filter((itemm) => filteredData?.find((item) => item._id == itemm.product_id)?._id)
-            setDataDTToRender(filteredDataDT)
-
-        }
+    };
+    const settings = {
+        infinite: true,
+        adaptiveHeight: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: true,
+        responsive:
+            [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }
+            ]
     };
     return (
         <div>
@@ -72,7 +73,7 @@ const Index = () => {
                         <div>
                             <select onChange={onHandleClick} className="form-select-product">
                                 <option selected disabled >
-                                    thương hiệu
+                                    Tác giả
                                 </option>
                                 {authorData?.map((item) => {
                                     return (
@@ -84,21 +85,9 @@ const Index = () => {
                             </select>
                             <select onChange={onHandleClick} className="form-select-product">
                                 <option selected disabled>
-                                    mau sac
+                                    Nhà xuất bản
                                 </option>
-                                {color?.map((item) => {
-                                    return (
-                                        <option value={item}>
-                                            {item}
-                                        </option>
-                                    )
-                                })}
-                            </select>
-                            <select onChange={onHandleClick} className="form-select-product">
-                                <option selected disabled>
-                                    Size
-                                </option>
-                                {Size?.map((item) => {
+                                {Publisher?.map((item) => {
                                     return (
                                         <option value={item}>
                                             {item}
@@ -108,8 +97,9 @@ const Index = () => {
                             </select>
                         </div>
 
-                        <ProductSale />
+
                     </section>
+
                     <section className="our-team position-relative mt-5">
                         <div className="container_home">
                             <div className="d-flex pb-5">
@@ -154,6 +144,47 @@ const Index = () => {
 
                         </div>
                     </section>
+                    <div className="container_home">
+                        <div className="d-flex justify-content-between py-5">
+                            <div className="fs-5  text-uppercase fw-bold text-center">
+                                - Sách KHUYẾN MÃI
+                            </div>
+                        </div>
+                        <Slider  {...settings}>
+                            {dataSourceToRender?.slice(0, 6).map((item) => {
+                                if (item.price_sale > 0) {
+                                    return (
+                                        <div>
+                                            <a href={"/product/" + item._id + "/detail"} className="card product-main bg-white p-2">
+                                                <div className="d-flex flex-row overflow-hidden no-underline ">
+                                                    <img src={item.images[0]} width="100px" height="200px" />
+                                                    <div className="w-300 p-2">
+                                                        <h4>{item.name}</h4>
+                                                        <div>{authorName(item)}</div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                {item.price_sale > 0 ? (
+                                                    <div className="product-price d-flex justify-content-between">
+                                                        <div className="product-discount">-{discount(item)}%</div>
+                                                        <div className="d-flex">
+                                                            <del className="price-del">{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</del>
+                                                            <strong>{item.price_sale.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</strong>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="product-price row">
+                                                        <strong className="col-12">{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</strong>
+                                                    </div>
+                                                )}
+                                            </a>
+                                        </div>
+                                    )
+                                }
+                            })}
+                        </Slider>
+
+                    </div>
                 </div>
 
             </div >

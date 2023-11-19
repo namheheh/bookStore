@@ -7,7 +7,6 @@ import ProductAdd from "../views/admin/Product/ProductAdd";
 import ProductEdit from "../views/admin/Product/ProductEdit";
 
 import Index from "../views/client/home/Index";
-import IndexProduct from "../views/client/product/Index";
 import HomeClient from "../views/client/Home";
 import { CommentView } from "../views/admin/Comment";
 import IndexAdmin from "../views/admin/Index";
@@ -29,7 +28,12 @@ import HistoryOrder from "../views/admin/OrderMane/HistoryOrder/HistoryOrder";
 import Abortorder from "../views/admin/OrderMane/Abortorder/Abortorder";
 import Ordersuccess from "../views/client/home/ordersuccess";
 import Orderhistory from "../views/client/profile/orderhistory";
-
+import History from "../views/client/profile/userpurchase/history";
+import Purchase from "../views/client/profile/userpurchase/purchase";
+import Shipway from "../views/client/profile/userpurchase/shipway";
+import Transport from "../views/client/profile/userpurchase/transport";
+import Receive from "../views/client/profile/userpurchase/receive";
+import Canceled from "../views/client/profile/userpurchase/canceled";
 const routes: RouteObject[] = [
     {
         path: '/admin',
@@ -104,10 +108,6 @@ const routes: RouteObject[] = [
                 element: <Index />
             },
             {
-                path: 'product',
-                element: <IndexProduct />
-            },
-            {
                 path: 'product/:_id/detail',
 
                 element: <ProductDetail />
@@ -131,6 +131,30 @@ const routes: RouteObject[] = [
             {
                 path: 'orderhistory',
                 element: <Orderhistory />
+            },
+            {
+                path: 'purchase',
+                element: <Purchase />
+            },
+            {
+                path: 'receive',
+                element: <Receive />
+            },
+            {
+                path: 'transport',
+                element: <Transport />
+            },
+            {
+                path: 'shipway',
+                element: <Shipway />
+            },
+            {
+                path: 'history',
+                element: <History />
+            },
+            {
+                path: 'canceled',
+                element: <Canceled />
             },
         ]
     },

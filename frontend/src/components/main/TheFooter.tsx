@@ -7,12 +7,6 @@ const TheFooter = () => {
                         <div className="col-xxl-4 col-xxl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                             <div className="footer-logo-col">
                                 <a href="#"><img width="auto" height="120px" src="https://bizweb.dktcdn.net/100/364/248/themes/736344/assets/logo.png?1699411180010" /></a>
-                                <ul className="social-icons list-unstyled mb-0 pl-0 pt-4 d-flex align-items-center">
-                                    <li><a href="#" className="rounded-circle"><img src="/src/assets/images/footer/icon_facebook.svg" /><img src="../assets/images/footer/icon_facebook_white.svg" /></a></li>
-                                    <li><a href="#" className="rounded-circle"><img src="/src/assets/images/footer/icon_twitter.svg" /><img src="../assets/images/footer/icon_twitter_white.svg" /></a></li>
-                                    <li><a href="#" className="rounded-circle"><img src="/src/assets/images/footer/icon_google_plus.svg" /><img src="../assets/images/footer/icon_google_plus_white.svg" /></a></li>
-                                    <li><a href="#" className="rounded-circle"><img src="/src/assets/images/footer/icon_linkdin.svg" /><img src="../assets/images/footer/icon_linkdin_white.svg" /></a></li>
-                                </ul>
                             </div>
                         </div>
 
